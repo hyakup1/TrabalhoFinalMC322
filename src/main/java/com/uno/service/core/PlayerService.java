@@ -7,14 +7,31 @@ import java.util.List;
 import com.uno.model.entity.Player;
 import com.uno.model.entity.Table;
 
+/**
+ * Service class that manages player-related operations in the game.
+ * <p>
+ * This class acts as an intermediary for creating players, ensuring unique 
+ * names, and adding them to the game {@link Table}.
+ */
 public class PlayerService {
     private final List<Player> players = new ArrayList<>(); 
     private final Table table; 
     
+    /**
+     * Constructs a new PlayerService associated with a specific game table.
+     *
+     * @param table The {@link Table} where the players will be added.
+     */
     public PlayerService( Table table ){
         this.table = table; 
     }
 
+    /**
+     * Creates a new player with the given name and adds them to the game.
+     *
+     * @param playerName The name of the new player to be added.
+     * @throws IllegalArgumentException if a player with the same name already exists.
+     */
     public void addPlayer( String playerName ){
         Player player = new Player(playerName);
 
@@ -25,10 +42,22 @@ public class PlayerService {
         table.addPlayer(player);
     }
 
+    /**
+     * Retrieves all registered players in the game.
+     *
+     * @return An unmodifiable {@link List} of the registered {@link Player}s.
+     */
     public List<Player> getPlayers(){
         return Collections.unmodifiableList(players);
     }
 
+    /**
+     * Finds and retrieves a specific player by their name.
+     *
+     * @param name The exact name of the player to search for.
+     * @return The {@link Player} matching the specified name.
+     * @throws IllegalArgumentException if no player with the given name is found.
+     */
     public Player getPlayerByName( String name ){
         return players.stream()
                 .filter(p -> p.getName().equals(name))

@@ -12,7 +12,15 @@ import com.uno.model.valueobject.Symbol;
  * its creation, the combination of these attributes is valid according to the game rules.
  */
 public class Card {
+    
+    /**
+     * The symbol or value of the card.
+     */
     private final Symbol symbol;
+    
+    /**
+     * The color of the card.
+     */
     private final Color color;
 
     /**
@@ -86,11 +94,11 @@ public class Card {
      * <p>
      * Ensures that:
      * <ul>
-     * <li>Special action cards (+4 or Change Color) can be any color ( considering their effects have been activated already ).</li>
+     * <li>Special action cards (+4 or Change Color) can be any color (considering their effects have been activated already).</li>
      * <li>Normal or simple action cards cannot be black.</li>
      * </ul>
      *
-     * @throws IllegalArgumentException if the combination between the {@link Symbol} and the {@link Color} is invalid, or if any of them is null.
+     * @throws IllegalArgumentException if any argument is null, or if the combination between the {@link Symbol} and the {@link Color} is invalid.
      */
     private void validateCard(){
         if( symbol == null || color == null )
@@ -118,10 +126,20 @@ public class Card {
         return color; 
     }
 
+    /**
+     * Checks if this card is a joker card (Wild or Wild Draw Four).
+     *
+     * @return {@code true} if the card is a {@code CHANGE_COLOR} or {@code PLUS_FOUR}, {@code false} otherwise.
+     */
     public boolean isJoker(){
         return symbol == Symbol.CHANGE_COLOR || symbol == Symbol.PLUS_FOUR;
     }
 
+    /**
+     * Returns a string representation of the card.
+     *
+     * @return A string combining the color and symbol names (e.g., "RED ONE").
+     */
     @Override
     public String toString(){
         return color.toString() + " " + symbol.toString(); 
@@ -129,10 +147,11 @@ public class Card {
 
     /**
      * Compares this card with another object for equality.
-     * Two cards are considered equal if they have the same symbol or color.
+     * <p>
+     * Two cards are considered equal if they have either the same symbol OR the same color.
      *
-     * @param o the object to compare with this card
-     * @return true if the cards have the same symbol or color, false otherwise
+     * @param o The object to compare with this card.
+     * @return {@code true} if the cards have the same symbol or color, {@code false} otherwise.
      */
     @Override
     public boolean equals(Object o) {
@@ -144,10 +163,9 @@ public class Card {
     }
 
     /**
-     * Returns the hash code for this card.
-     * The hash code is computed based on both the symbol and color.
+     * Returns the hash code value for this card.
      *
-     * @return the hash code value for this card
+     * @return The hash code computed based on the color and symbol.
      */
     @Override
     public int hashCode() {

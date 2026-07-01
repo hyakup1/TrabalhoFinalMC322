@@ -67,6 +67,12 @@ public class Player {
         hand.remove(hand.indexOf(card));
     }
 
+    /**
+     * Checks if the player currently holds the specified card in their hand.
+     *
+     * @param card The {@link Card} to look for.
+     * @return {@code true} if the card is in the player's hand, {@code false} otherwise.
+     */
     public boolean hasCard( Card card ){
         return hand.indexOf(card) != -1;
     }
@@ -102,6 +108,14 @@ public class Player {
         return hand.isEmpty();
     }
 
+    /**
+     * Compares this player with another object for equality.
+     * <p>
+     * Two players are considered equal if they have the exact same name.
+     *
+     * @param o The object to compare with this player.
+     * @return {@code true} if the players have the same name, {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,6 +124,11 @@ public class Player {
         return Objects.equals(name, player.name);
     }
 
+    /**
+     * Returns the hash code value for this player.
+     *
+     * @return The hash code computed based on the player's name.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name);
