@@ -1,5 +1,6 @@
 package com.uno.service.core;
 
+import com.uno.exception.JogadaInvalidaException;
 import com.uno.model.entity.Card;
 import com.uno.model.entity.Table;
 
@@ -39,11 +40,15 @@ public class TableService {
 
     /**
      * Attempts to play a card for the current player based on its symbol and color names.
+     * <p>
+     * Note: Since {@link com.uno.service.core.command.CommandHandler#handle} does not declare 
+     * throws, any calling command handler must catch {@link JogadaInvalidaException} internally.
      *
      * @param symbolName The string representation of the card's symbol.
      * @param colorName  The string representation of the card's color.
+     * @throws JogadaInvalidaException if the play is invalid (e.g. card not in hand, color/symbol mismatch).
      */
-    public void play( String symbolName, String colorName ){
+    public void play( String symbolName, String colorName ) throws JogadaInvalidaException {
         Card card = new Card( symbolName, colorName );
         table.play(card);
     }

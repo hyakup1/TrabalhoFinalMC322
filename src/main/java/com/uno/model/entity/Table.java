@@ -1,5 +1,7 @@
 package com.uno.model.entity;
 
+import com.uno.exception.JogadaInvalidaException;
+
 /**
  * Represents the game table.
  * <p>
@@ -59,12 +61,12 @@ public class Table {
      * and removes it from the player's hand.
      *
      * @param card The {@link Card} the current player intends to play.
-     * @throws IllegalArgumentException if the player does not have the specified card in their hand.
+     * @throws JogadaInvalidaException if the player does not have the specified card in their hand, or the card cannot be legally played.
      */
-    public void play( Card card ){
+    public void play( Card card ) throws JogadaInvalidaException {
         Player player = turnManager.getTurnPlayer();
         if( !player.hasCard(card) ) 
-            throw new IllegalArgumentException("Jogada inválida: O jogador não possui a carta " + card.toString() );
+            throw new JogadaInvalidaException("Jogada inválida: O jogador não possui a carta " + card.toString() );
 
         deck.play(card);
         player.play(card);

@@ -3,6 +3,8 @@ package com.uno.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.uno.exception.TurnoVioladoException;
+
 /**
  * Manages the players' turns and the flow of the game.
  * <p>
@@ -27,11 +29,11 @@ public class TurnManager {
      * Retrieves the player whose turn it currently is.
      *
      * @return The {@link Player} holding the current turn.
-     * @throws IllegalArgumentException if there are no players registered in the game.
+     * @throws TurnoVioladoException if there are no players registered in the game.
      */
     public Player getTurnPlayer(){
         if( players.isEmpty() )
-            throw new IllegalArgumentException("Nenhum jogador registrado. ");
+            throw new TurnoVioladoException("Nenhum jogador registrado. ");
 
         return players.get(currentId);
     }
