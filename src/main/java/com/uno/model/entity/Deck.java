@@ -29,6 +29,36 @@ public class Deck {
     }
 
     /**
+     * Reconstructs a Deck from previously saved pile contents, bypassing the
+     * default random shuffle. Intended for use by the persistence layer only.
+     *
+     * @param drawPile    the saved list of cards in the draw pile
+     * @param discardPile the saved list of cards in the discard pile
+     */
+    public Deck( List<Card> drawPile, List<Card> discardPile ){
+        this.drawPile.addAll(drawPile);
+        this.discardPile.addAll(discardPile);
+    }
+
+    /**
+     * Retrieves an unmodifiable copy of the draw pile.
+     *
+     * @return a List containing the cards currently in the draw pile.
+     */
+    public List<Card> getDrawPile(){
+        return List.copyOf(drawPile);
+    }
+
+    /**
+     * Retrieves an unmodifiable copy of the discard pile.
+     *
+     * @return a List containing the cards currently in the discard pile.
+     */
+    public List<Card> getDiscardPile(){
+        return List.copyOf(discardPile);
+    }
+
+    /**
      * Draws a card from the top of the draw pile.
      * <p>
      * If the draw pile is empty, it automatically rebuilds it before drawing.

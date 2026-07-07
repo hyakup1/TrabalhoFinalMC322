@@ -9,8 +9,8 @@ import com.uno.exception.JogadaInvalidaException;
  * that connects the {@link Deck}, the {@link TurnManager}, and the players.
  */
 public class Table {
-    private final Deck deck = new Deck();
-    private final TurnManager turnManager = new TurnManager();
+    private final Deck deck;
+    private final TurnManager turnManager;
     private final int initialCardCount;
 
     /**
@@ -20,6 +20,40 @@ public class Table {
      */
     public Table( int initialCardCount ){
         this.initialCardCount = initialCardCount;
+        this.deck = new Deck();
+        this.turnManager = new TurnManager();
+    }
+
+    /**
+     * Reconstructs a Table from previously saved deck and turn manager state.
+     * Intended for use by the persistence layer only.
+     *
+     * @param initialCardCount the initial amount of cards per player
+     * @param deck             the reconstructed deck
+     * @param turnManager      the reconstructed turn manager
+     */
+    public Table( int initialCardCount, Deck deck, TurnManager turnManager ){
+        this.initialCardCount = initialCardCount;
+        this.deck = deck;
+        this.turnManager = turnManager;
+    }
+
+    /**
+     * Retrieves the initial card count per player.
+     *
+     * @return the initial card count.
+     */
+    public int getInitialCardCount(){
+        return initialCardCount;
+    }
+
+    /**
+     * Retrieves the deck associated with this table.
+     *
+     * @return the {@link Deck}.
+     */
+    public Deck getDeck(){
+        return deck;
     }
 
     /**
