@@ -148,17 +148,17 @@ public class Card {
     /**
      * Compares this card with another object for equality.
      * <p>
-     * Two cards are considered equal if they have either the same symbol OR the same color.
+     * Two cards are considered equal if they have the same symbol AND the same color.
      *
      * @param o The object to compare with this card.
-     * @return {@code true} if the cards have the same symbol or color, {@code false} otherwise.
+     * @return {@code true} if the cards have the same symbol and color, {@code false} otherwise.
      */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Card card = (Card) o;
-        return Objects.equals(color, card.color) ||
+        return Objects.equals(color, card.color) &&
                Objects.equals(symbol, card.symbol);
     }
 
