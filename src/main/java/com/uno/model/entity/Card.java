@@ -69,7 +69,7 @@ public class Card {
             return Symbol.valueOf(symbolName);
         }
         catch ( IllegalArgumentException | NullPointerException e ){
-            throw new IllegalArgumentException("Símbolo da carda inválido: " + symbolName );
+            throw new IllegalArgumentException("Símbolo da carta inválido: " + symbolName );
         }
     }
 

@@ -42,10 +42,10 @@ class JsonFileStore<T> {
      */
     public void save(T obj, Path path) throws PersistenceException {
         if (obj == null) {
-            throw new PersistenceException("Cannot save a null object.");
+            throw new PersistenceException("Não é possível salvar um objeto nulo.");
         }
         if (path == null) {
-            throw new PersistenceException("Target path cannot be null.");
+            throw new PersistenceException("O caminho de destino não pode ser nulo.");
         }
 
         try {
@@ -59,7 +59,7 @@ class JsonFileStore<T> {
                 gson.toJson(obj, writer);
             }
         } catch (IOException | JsonSyntaxException e) {
-            throw new PersistenceException("Failed to save state to " + path.getFileName() + ": " + e.getMessage(), e);
+            throw new PersistenceException("Falha ao salvar o estado no arquivo " + path.getFileName() + ": " + e.getMessage(), e);
         }
     }
 
@@ -74,7 +74,7 @@ class JsonFileStore<T> {
      */
     public T load(Path path, Class<T> type) throws PersistenceException, SaveNotFoundException {
         if (path == null) {
-            throw new PersistenceException("Path to load cannot be null.");
+            throw new PersistenceException("O caminho do arquivo não pode ser nulo.");
         }
 
         if (!Files.exists(path) || !Files.isRegularFile(path)) {
@@ -84,7 +84,7 @@ class JsonFileStore<T> {
         try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             T obj = gson.fromJson(reader, type);
             if (obj == null) {
-                throw new PersistenceException("Loaded file is empty: " + path.getFileName());
+                throw new PersistenceException("O arquivo carregado está vazio: " + path.getFileName());
             }
             return obj;
         } catch (IOException | JsonSyntaxException e) {
