@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import com.uno.exception.JogadaInvalidaException;
+
 /**
  * Represents a player in the Uno game.
  * <p>
@@ -58,11 +60,11 @@ public class Player {
      * Plays a specific card from the player's hand, removing it from their current collection.
      *
      * @param card The {@link Card} the player intends to play.
-     * @throws IllegalArgumentException if the player does not have the specified card in their hand.
+     * @throws JogadaInvalidaException if the player does not have the specified card in their hand.
      */
-    public void play( Card card ){
+    public void play( Card card ) throws JogadaInvalidaException {
         if( !hasCard(card) )
-            throw new IllegalArgumentException("Jogada inválida: o jogador não possui a carta " + card.getSymbol().toString() + " " + card.getColor().toString() );
+            throw new JogadaInvalidaException("Jogada inválida: o jogador não possui a carta " + card.getSymbol().toString() + " " + card.getColor().toString() );
 
         hand.remove(hand.indexOf(card));
     }

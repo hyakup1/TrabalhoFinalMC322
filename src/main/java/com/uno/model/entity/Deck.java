@@ -3,6 +3,7 @@ package com.uno.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.uno.exception.JogadaInvalidaException;
 import com.uno.service.core.DeckFactory;
 
 /**
@@ -28,6 +29,36 @@ public class Deck {
     }
 
     /**
+     * Reconstructs a Deck from previously saved pile contents, bypassing the
+     * default random shuffle. Intended for use by the persistence layer only.
+     *
+     * @param drawPile    the saved list of cards in the draw pile
+     * @param discardPile the saved list of cards in the discard pile
+     */
+    public Deck( List<Card> drawPile, List<Card> discardPile ){
+        this.drawPile.addAll(drawPile);
+        this.discardPile.addAll(discardPile);
+    }
+
+    /**
+     * Retrieves an unmodifiable copy of the draw pile.
+     *
+     * @return a List containing the cards currently in the draw pile.
+     */
+    public List<Card> getDrawPile(){
+        return List.copyOf(drawPile);
+    }
+
+    /**
+     * Retrieves an unmodifiable copy of the discard pile.
+     *
+     * @return a List containing the cards currently in the discard pile.
+     */
+    public List<Card> getDiscardPile(){
+        return List.copyOf(discardPile);
+    }
+
+    /**
      * Draws a card from the top of the draw pile.
      * <p>
      * If the draw pile is empty, it automatically rebuilds it before drawing.
@@ -43,11 +74,11 @@ public class Deck {
      * Plays a card onto the discard pile.
      *
      * @param card The {@link Card} to be played.
-     * @throws IllegalArgumentException if the card cannot be legally played on top of the current discard pile.
+     * @throws JogadaInvalidaException if the card cannot be legally played on top of the current discard pile.
      */
-    public void play( Card card ){
+    public void play( Card card ) throws JogadaInvalidaException {
         if( !canPlay(card) )
-            throw new IllegalArgumentException("O jogador não pode jogar a carta " + card.toString() + " sobre a carta " + discardPile.getLast().toString() );
+            throw new JogadaInvalidaException("O jogador não pode jogar a carta " + card.toString() + " sobre a carta " + discardPile.getLast().toString() );
         discardPile.add(card);
     }
 

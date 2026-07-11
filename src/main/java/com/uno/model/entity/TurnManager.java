@@ -3,6 +3,8 @@ package com.uno.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.uno.exception.TurnoVioladoException;
+
 /**
  * Manages the players' turns and the flow of the game.
  * <p>
@@ -13,6 +15,54 @@ public class TurnManager {
     private final List<Player> players = new ArrayList<>();
     private int currentId = 0; 
     private int direction = 1; 
+
+    /**
+     * Constructs a new, empty TurnManager.
+     */
+    public TurnManager() {
+        // Default constructor
+    }
+
+    /**
+     * Reconstructs a TurnManager from previously saved state. Intended for use
+     * by the persistence layer only.
+     *
+     * @param players      the list of players in the game
+     * @param currentIndex the index of the player whose turn it currently is
+     * @param direction    the direction of play (1 for clockwise, -1 for counter-clockwise)
+     */
+    public TurnManager( List<Player> players, int currentIndex, int direction ){
+        this.players.addAll(players);
+        this.currentId = currentIndex;
+        this.direction = direction;
+    }
+
+    /**
+     * Retrieves an unmodifiable copy of the players.
+     *
+     * @return a List containing the players currently in the rotation.
+     */
+    public List<Player> getPlayers(){
+        return List.copyOf(players);
+    }
+
+    /**
+     * Retrieves the index of the player whose turn it currently is.
+     *
+     * @return the current turn player index.
+     */
+    public int getCurrentIndex(){
+        return currentId;
+    }
+
+    /**
+     * Retrieves the current direction of play.
+     *
+     * @return the play direction indicator (1 or -1).
+     */
+    public int getDirection(){
+        return direction;
+    }
 
     /**
      * Adds a player to the turn rotation.
@@ -27,11 +77,11 @@ public class TurnManager {
      * Retrieves the player whose turn it currently is.
      *
      * @return The {@link Player} holding the current turn.
-     * @throws IllegalArgumentException if there are no players registered in the game.
+     * @throws TurnoVioladoException if there are no players registered in the game.
      */
     public Player getTurnPlayer(){
         if( players.isEmpty() )
-            throw new IllegalArgumentException("Nenhum jogador registrado. ");
+            throw new TurnoVioladoException("Nenhum jogador registrado. ");
 
         return players.get(currentId);
     }

@@ -1,5 +1,7 @@
 package com.uno.model.entity;
 
+import com.uno.exception.JogadaInvalidaException;
+
 /**
  * Represents the game table.
  * <p>
@@ -7,8 +9,8 @@ package com.uno.model.entity;
  * that connects the {@link Deck}, the {@link TurnManager}, and the players.
  */
 public class Table {
-    private final Deck deck = new Deck();
-    private final TurnManager turnManager = new TurnManager();
+    private final Deck deck;
+    private final TurnManager turnManager;
     private final int initialCardCount;
 
     /**
@@ -18,6 +20,40 @@ public class Table {
      */
     public Table( int initialCardCount ){
         this.initialCardCount = initialCardCount;
+        this.deck = new Deck();
+        this.turnManager = new TurnManager();
+    }
+
+    /**
+     * Reconstructs a Table from previously saved deck and turn manager state.
+     * Intended for use by the persistence layer only.
+     *
+     * @param initialCardCount the initial amount of cards per player
+     * @param deck             the reconstructed deck
+     * @param turnManager      the reconstructed turn manager
+     */
+    public Table( int initialCardCount, Deck deck, TurnManager turnManager ){
+        this.initialCardCount = initialCardCount;
+        this.deck = deck;
+        this.turnManager = turnManager;
+    }
+
+    /**
+     * Retrieves the initial card count per player.
+     *
+     * @return the initial card count.
+     */
+    public int getInitialCardCount(){
+        return initialCardCount;
+    }
+
+    /**
+     * Retrieves the deck associated with this table.
+     *
+     * @return the {@link Deck}.
+     */
+    public Deck getDeck(){
+        return deck;
     }
 
     /**
@@ -59,12 +95,12 @@ public class Table {
      * and removes it from the player's hand.
      *
      * @param card The {@link Card} the current player intends to play.
-     * @throws IllegalArgumentException if the player does not have the specified card in their hand.
+     * @throws JogadaInvalidaException if the player does not have the specified card in their hand, or the card cannot be legally played.
      */
-    public void play( Card card ){
+    public void play( Card card ) throws JogadaInvalidaException {
         Player player = turnManager.getTurnPlayer();
         if( !player.hasCard(card) ) 
-            throw new IllegalArgumentException("Jogada inválida: O jogador não possui a carta " + card.toString() );
+            throw new JogadaInvalidaException("Jogada inválida: O jogador não possui a carta " + card.toString() );
 
         deck.play(card);
         player.play(card);
