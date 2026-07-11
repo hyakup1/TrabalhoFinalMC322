@@ -1,5 +1,6 @@
 package com.uno.controller;
 
+import com.uno.exception.JogadaInvalidaException;
 import com.uno.model.Command;
 import com.uno.service.core.command.CommandFactory;
 import com.uno.service.core.command.CommandHandler;
@@ -25,8 +26,9 @@ public class CommandDispatcher {
      *
      * @param line The command line to process.
      * @return An optional message produced by the command handler.
+     * @throws JogadaInvalidaException if the command attempts an invalid play.
      */
-    public String process( String line ){
+    public String process( String line ) throws JogadaInvalidaException {
         Command command = CommandParser.parseCommand(line);
         return dispatchCommand(command);
     }
@@ -36,8 +38,9 @@ public class CommandDispatcher {
      *
      * @param command The command to dispatch.
      * @return An optional message produced by the command handler.
+     * @throws JogadaInvalidaException if the command attempts an invalid play.
      */
-    public String dispatchCommand( Command command ){
+    public String dispatchCommand( Command command ) throws JogadaInvalidaException {
         CommandHandler handler = commandFactory.getHandler(command);
         return handler.handleWithOutput(command);
     }

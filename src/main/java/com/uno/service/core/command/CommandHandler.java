@@ -1,6 +1,7 @@
 package com.uno.service.core.command;
 
 
+import com.uno.exception.JogadaInvalidaException;
 import com.uno.model.Command;
 
 /**
@@ -11,8 +12,9 @@ public interface CommandHandler {
      * Executes the specified command.
      *
      * @param command the command to handle
+     * @throws JogadaInvalidaException if the command attempts an invalid play
      */
-    void handle( Command command );
+    void handle( Command command ) throws JogadaInvalidaException;
 
     /**
      * Executes the command and returns optional displayable output.
@@ -23,8 +25,9 @@ public interface CommandHandler {
      *
      * @param command the command to handle
      * @return formatted output to display, or {@code null} if none
+     * @throws JogadaInvalidaException if the command attempts an invalid play
      */
-    default String handleWithOutput( Command command ){
+    default String handleWithOutput( Command command ) throws JogadaInvalidaException {
         handle(command);
         return null;
     }

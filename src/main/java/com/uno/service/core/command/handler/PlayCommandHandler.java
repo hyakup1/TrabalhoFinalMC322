@@ -24,23 +24,19 @@ public class PlayCommandHandler implements CommandHandler {
      * Plays the card described by the command parameters.
      *
      * @param command The command containing the card symbol and color.
+     * @throws JogadaInvalidaException if the current player cannot play the specified card.
      */
     @Override
-    public void handle( Command command ){
+    public void handle( Command command ) throws JogadaInvalidaException {
         String[] parameters = command.getParameters();
         if( parameters.length != 2 || parameters[0].isBlank() || parameters[1].isBlank() )
             throw new IllegalArgumentException("Uso do comando: PLAY;símbolo;cor. ");
 
-        try{
-            tableService.play(parameters[0], parameters[1]);
-        }
-        catch( JogadaInvalidaException e ){
-            throw new IllegalArgumentException(e.getMessage(), e);
-        }
+        tableService.play(parameters[0], parameters[1]);
     }
 
     @Override
-    public String handleWithOutput( Command command ){
+    public String handleWithOutput( Command command ) throws JogadaInvalidaException {
         handle(command);
         return "Carta jogada. ";
     }
