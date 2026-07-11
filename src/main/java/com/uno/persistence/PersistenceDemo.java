@@ -31,9 +31,9 @@ public class PersistenceDemo {
             int originalDrawPileSize = originalTable.getDeck().getDrawPile().size();
             List<Card> arthurHand = arthur.getHand();
 
-            System.out.println("Original Top Discard: " + originalTopDiscard);
-            System.out.println("Original Draw Pile Size: " + originalDrawPileSize);
-            System.out.println("Arthur's Hand: " + arthurHand);
+            System.out.println("Carta original no topo do descarte: " + originalTopDiscard);
+            System.out.println("Tamanho original do monte de compra: " + originalDrawPileSize);
+            System.out.println("Mão de Arthur: " + arthurHand);
 
             // 2. Map to Snapshot and Save
             GameStateSnapshot snapshot = GameStateMapper.toSnapshot(originalTable);
@@ -54,26 +54,26 @@ public class PersistenceDemo {
             Player loadedArthur = loadedTable.getTurnManager().getPlayers().get(0);
             List<Card> loadedArthurHand = loadedArthur.getHand();
 
-            System.out.println("Loaded Top Discard: " + loadedTopDiscard);
-            System.out.println("Loaded Draw Pile Size: " + loadedDrawPileSize);
-            System.out.println("Loaded Arthur's Hand: " + loadedArthurHand);
+            System.out.println("Carta carregada no topo do descarte: " + loadedTopDiscard);
+            System.out.println("Tamanho carregado do monte de compra: " + loadedDrawPileSize);
+            System.out.println("Mão carregada de Arthur: " + loadedArthurHand);
 
             // Assertions
             boolean success = true;
             if (originalTable.getInitialCardCount() != loadedTable.getInitialCardCount()) {
-                System.err.println("Erro: Initial card count divergente!");
+                System.err.println("Erro: Quantidade inicial de cartas divergente!");
                 success = false;
             }
             if (!originalTopDiscard.equals(loadedTopDiscard)) {
-                System.err.println("Erro: Top discard card divergente!");
+                System.err.println("Erro: Carta no topo do descarte divergente!");
                 success = false;
             }
             if (originalDrawPileSize != loadedDrawPileSize) {
-                System.err.println("Erro: Draw pile size divergente!");
+                System.err.println("Erro: Tamanho do monte de compra divergente!");
                 success = false;
             }
             if (!arthurHand.equals(loadedArthurHand)) {
-                System.err.println("Erro: Hand de Arthur divergente!");
+                System.err.println("Erro: Mão de Arthur divergente!");
                 success = false;
             }
             if (loadedTable.getTurnManager().getPlayers().size() != 2) {

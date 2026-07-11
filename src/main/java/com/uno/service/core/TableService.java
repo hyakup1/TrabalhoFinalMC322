@@ -41,8 +41,8 @@ public class TableService {
     /**
      * Attempts to play a card for the current player based on its symbol and color names.
      * <p>
-     * Note: Since {@link com.uno.service.core.command.CommandHandler#handle} does not declare 
-     * throws, any calling command handler must catch {@link JogadaInvalidaException} internally.
+     * The exception is propagated through the command boundary so the view can notify
+     * the player and request another play.
      *
      * @param symbolName The string representation of the card's symbol.
      * @param colorName  The string representation of the card's color.

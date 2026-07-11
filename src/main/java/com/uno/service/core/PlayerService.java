@@ -62,6 +62,6 @@ public class PlayerService {
         return players.stream()
                 .filter(p -> p.getName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Jogaor não encontrado: " + name));
+                .orElseThrow(() -> new IllegalArgumentException("Jogador não encontrado: " + name));
     }
 }

@@ -19,11 +19,22 @@ public class CommandParser {
      *
      * @param line the command line to parse
      * @return the parsed Command object
+     * @throws IllegalArgumentException if the command line is null or blank
      */
-    public static Command parseCommand(String line) {
-        String[] parts = line.split(";");
-        String action = parts[0];
-        String[] parameters = Arrays.stream(parts).skip(1).toArray(String[]::new);
+    public static Command parseCommand( String line ){
+        if( line == null || line.isBlank() )
+            throw new IllegalArgumentException("O comando não pode ser vazio. ");
+
+        String[] parts = line.split(";", -1);
+        String action = parts[0].trim();
+        if( action.isBlank() )
+            throw new IllegalArgumentException("A ação do comando não pode ser vazia. ");
+
+        String[] parameters = Arrays.stream(parts)
+            .skip(1)
+            .map(String::trim)
+            .toArray(String[]::new);
+
         return new Command(line, action, parameters);
     }
 }
