@@ -13,6 +13,10 @@ import com.uno.service.core.command.handler.DrawNCommandHandler;
 import com.uno.service.core.command.handler.EndTurnCommandHandler;
 import com.uno.service.core.command.handler.FlipDirectionCommandHandler;
 import com.uno.service.core.command.handler.PlayCommandHandler;
+import com.uno.service.core.command.handler.PlayPlusFourCommandHandler;
+import com.uno.service.core.command.handler.PlayPlusTwoCommandHandler;
+import com.uno.service.core.command.handler.PlayReverseCommandHandler;
+import com.uno.service.core.command.handler.PlaySkipCommandHandler;
 
 /**
  * Factory class responsible for registering and retrieving command handlers.
@@ -31,9 +35,15 @@ public class CommandFactory {
         handlers.put("ADD_PLAYER", new AddPlayerCommandHandler(playerService));
         handlers.put("DRAW", new DrawCommandHandler(tableService));
         handlers.put("DRAW_N", new DrawNCommandHandler(tableService));
-        handlers.put("PLAY", new PlayCommandHandler(tableService));
+        handlers.put("PLAY", new PlayCommandHandler(tableService, turnManagerService));
         handlers.put("END_TURN", new EndTurnCommandHandler(turnManagerService));
         handlers.put("FLIP_DIRECTION", new FlipDirectionCommandHandler(turnManagerService));
+        
+        // Action Card Handlers
+        handlers.put("PLAY_SKIP", new PlaySkipCommandHandler(tableService, turnManagerService));
+        handlers.put("PLAY_REVERSE", new PlayReverseCommandHandler(tableService, turnManagerService));
+        handlers.put("PLAY_PLUS_TWO", new PlayPlusTwoCommandHandler(tableService, turnManagerService));
+        handlers.put("PLAY_PLUS_FOUR", new PlayPlusFourCommandHandler(tableService, turnManagerService));
     }
 
     /**
