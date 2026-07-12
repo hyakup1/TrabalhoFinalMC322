@@ -25,7 +25,8 @@ public class Deck {
      */
     public Deck(){
         buildDrawPile();
-        discardPile.add(draw());
+        while( discardPile.isEmpty() || discardPile.getLast().isJoker() )
+            discardPile.add(draw());
     }
 
     /**

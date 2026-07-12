@@ -31,4 +31,9 @@ public interface GameView {
      * @param errorMessage the error to exhibit.
      */
     void showError(String errorMessage);
+
+    /**
+     * Clears the terminal screen or console window to keep the presentation clean.
+     */
+    void clearScreen();
 }

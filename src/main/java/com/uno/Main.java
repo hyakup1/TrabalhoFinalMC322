@@ -23,10 +23,10 @@ public class Main {
 
         // Adding players via commands for standardization
         try {
-            commandDispatcher.process("ADD_PLAYER; Arthur");
-            commandDispatcher.process("ADD_PLAYER; Caique");
-            commandDispatcher.process("ADD_PLAYER; Enzo");
-            commandDispatcher.process("ADD_PLAYER; Pedro");
+            commandDispatcher.process("ADD_PLAYER ; Arthur");
+            commandDispatcher.process("ADD_PLAYER ; Caique");
+            commandDispatcher.process("ADD_PLAYER ; Enzo");
+            commandDispatcher.process("ADD_PLAYER ; Pedro");
         } catch (Exception e) {
             view.showError("Falha na inicialização do jogo: " + e.getMessage());
             return;
@@ -35,6 +35,7 @@ public class Main {
         // Game Loop
         boolean isGameOver = false;
         while (!isGameOver) {
+            view.clearScreen();
             view.showGameState(table);
 
             try {
@@ -46,13 +47,16 @@ public class Main {
             }
 
             // Check game over condition
-            for (Player player : table.getTurnManager().getPlayers()) {
+            for (Player player : playerService.getPlayers()) {
                 if (player.isHandEmpty()) {
                     isGameOver = true;
                     view.showMessage("Jogo finalizado! Vencedor: " + player.getName());
                     break;
                 }
             }
+
+            view.showMessage("Pressione ENTER para continuar. "); 
+            view.readCommand();
         }
     }
 }

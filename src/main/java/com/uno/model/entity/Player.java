@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import com.uno.model.valueobject.Color;
+import com.uno.model.valueobject.Symbol;
 import com.uno.exception.JogadaInvalidaException;
 
 /**
@@ -65,8 +67,11 @@ public class Player {
     public void play( Card card ) throws JogadaInvalidaException {
         if( !hasCard(card) )
             throw new JogadaInvalidaException("Jogada inválida: o jogador não possui a carta " + card.getSymbol().toString() + " " + card.getColor().toString() );
-
-        hand.remove(hand.indexOf(card));
+        if( card.isJoker() ){
+            Card original = new Card( card.getSymbol(), Color.BLACK );
+            hand.remove(hand.indexOf(original)); 
+        }
+        else hand.remove(hand.indexOf(card));
     }
 
     /**
@@ -76,6 +81,10 @@ public class Player {
      * @return {@code true} if the card is in the player's hand, {@code false} otherwise.
      */
     public boolean hasCard( Card card ){
+        if( card.isJoker() ){
+            Card original = new Card( card.getSymbol(), Color.BLACK );
+            return hand.indexOf(original) != -1; 
+        }
         return hand.indexOf(card) != -1;
     }
 

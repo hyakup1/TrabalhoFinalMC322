@@ -22,15 +22,16 @@ public class DeckFactory {
      * exceptions thrown by the {@link Card} constructor are caught and suppressed.
      */
     public DeckFactory(){
-        for( Color color : Color.values() )
-            for( Symbol symbol : Symbol.values() ){
-                try{
-                    deck.add(new Card(symbol, color));
-                }   
-                catch ( Exception e ){}
+        for( Color color : Color.values() ) if( color != Color.BLACK )
+            for( Symbol symbol : Symbol.values() ) if( symbol != Symbol.PLUS_FOUR && symbol != Symbol.CHANGE_COLOR ) {
+                deck.add(new Card(symbol, color));
             }
 
-        } 
+        for( int i = 0; i < 4; i++ ){
+            deck.add(new Card(Symbol.PLUS_FOUR, Color.BLACK));
+            deck.add(new Card(Symbol.CHANGE_COLOR, Color.BLACK));
+        }
+    } 
         
     /**
      * Shuffles the internally generated deck and returns a copy of it.
