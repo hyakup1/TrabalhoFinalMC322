@@ -11,7 +11,7 @@ import com.uno.model.entity.Table;
  * such as drawing or playing cards on the {@link Table}.
  */
 public class TableService {
-    private final Table table; 
+    private Table table; 
 
     /**
      * Constructs a new TableService linked to a specific game table.
@@ -20,6 +20,24 @@ public class TableService {
      */
     public TableService( Table table ){
         this.table = table; 
+    }
+
+    /**
+     * Updates the underlying table reference.
+     *
+     * @param table the new Table instance
+     */
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
+    /**
+     * Retrieves the underlying table reference.
+     *
+     * @return the current Table instance
+     */
+    public Table getTable() {
+        return table;
     }
 
     /**

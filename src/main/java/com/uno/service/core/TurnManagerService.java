@@ -11,7 +11,7 @@ import com.uno.model.entity.TurnManager;
  * to flip directions, end turns, and retrieve the current player.
  */
 public class TurnManagerService {
-    private final TurnManager turnManager; 
+    private TurnManager turnManager; 
 
     /**
      * Constructs a new TurnManagerService by extracting the turn manager from the given table.
@@ -19,6 +19,15 @@ public class TurnManagerService {
      * @param table The {@link Table} whose turn manager will be controlled.
      */
     public TurnManagerService( Table table ){
+        this.turnManager = table.getTurnManager();
+    }
+
+    /**
+     * Updates the underlying TurnManager reference using the new Table instance.
+     *
+     * @param table the new Table instance
+     */
+    public void setTable(Table table) {
         this.turnManager = table.getTurnManager();
     }
 

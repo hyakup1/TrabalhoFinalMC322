@@ -7,6 +7,9 @@ import com.uno.model.Command;
 import com.uno.service.core.PlayerService;
 import com.uno.service.core.TableService;
 import com.uno.service.core.TurnManagerService;
+import com.uno.persistence.JsonGameRepository;
+import com.uno.service.core.command.handler.SaveCommandHandler;
+import com.uno.service.core.command.handler.LoadCommandHandler;
 import com.uno.service.core.command.handler.AddPlayerCommandHandler;
 import com.uno.service.core.command.handler.DrawCommandHandler;
 import com.uno.service.core.command.handler.DrawNCommandHandler;
@@ -44,6 +47,11 @@ public class CommandFactory {
         handlers.put("PLAY_REVERSE", new PlayReverseCommandHandler(tableService, turnManagerService));
         handlers.put("PLAY_PLUS_TWO", new PlayPlusTwoCommandHandler(tableService, turnManagerService));
         handlers.put("PLAY_PLUS_FOUR", new PlayPlusFourCommandHandler(tableService, turnManagerService));
+
+        // Persistence Commands
+        JsonGameRepository repository = new JsonGameRepository();
+        handlers.put("SAVE", new SaveCommandHandler(tableService, repository));
+        handlers.put("LOAD", new LoadCommandHandler(tableService, playerService, turnManagerService, repository));
     }
 
     /**

@@ -45,6 +45,8 @@ public class ConsoleView implements GameView {
         System.out.println("  PLAY_PLUS_FOUR ; PLUS_FOUR ; <COR_ESCOLHIDA> - Jogar carta +4");
         System.out.println("  PLAY ; CHANGE_COLOR ; <COR_ESCOLHIDA>        - Jogar carta de Mudar Cor");
         System.out.println("  END_TURN                         - Passar a vez");
+        System.out.println("  SAVE                             - Salvar o estado atual do jogo");
+        System.out.println("  LOAD                             - Carregar o último estado salvo");
         System.out.println("======================================");
     }
 

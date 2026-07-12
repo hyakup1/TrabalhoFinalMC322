@@ -14,8 +14,7 @@ import com.uno.model.entity.Table;
  * names, and adding them to the game {@link Table}.
  */
 public class PlayerService {
-    private final List<Player> players = new ArrayList<>(); 
-    private final Table table; 
+    private Table table; 
     
     /**
      * Constructs a new PlayerService associated with a specific game table.
@@ -27,6 +26,15 @@ public class PlayerService {
     }
 
     /**
+     * Updates the underlying table reference.
+     *
+     * @param table the new Table instance
+     */
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
+    /**
      * Creates a new player with the given name and adds them to the game.
      *
      * @param playerName The name of the new player to be added.
@@ -35,10 +43,9 @@ public class PlayerService {
     public void addPlayer( String playerName ){
         Player player = new Player(playerName);
 
-        if( players.indexOf(player) != -1 ) 
+        if( table.getTurnManager().getPlayers().contains(player) ) 
             throw new IllegalArgumentException("Jogador com este nome já existe. ");
 
-        players.add(player);
         table.addPlayer(player);
     }
 
@@ -48,7 +55,7 @@ public class PlayerService {
      * @return An unmodifiable {@link List} of the registered {@link Player}s.
      */
     public List<Player> getPlayers(){
-        return Collections.unmodifiableList(players);
+        return Collections.unmodifiableList(table.getTurnManager().getPlayers());
     }
 
     /**
@@ -59,7 +66,7 @@ public class PlayerService {
      * @throws IllegalArgumentException if no player with the given name is found.
      */
     public Player getPlayerByName( String name ){
-        return players.stream()
+        return table.getTurnManager().getPlayers().stream()
                 .filter(p -> p.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Jogador não encontrado: " + name));
