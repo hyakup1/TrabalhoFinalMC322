@@ -7,26 +7,27 @@ import com.uno.service.core.TurnManagerService;
 import com.uno.service.core.command.CommandHandler;
 
 /**
- * Command handler responsible for playing a card from the current player's hand
- * and ending their turn.
+ * Command handler responsible for playing a skip card from the current player's hand,
+ * ending their turn, and immediately ending the next player's turn.
  */
-public class PlayCommandHandler implements CommandHandler {
+public class PlaySkipCommandHandler implements CommandHandler {
     private final TableService tableService;
     private final TurnManagerService turnManagerService;
 
     /**
-     * Constructs a new PlayCommandHandler.
+     * Constructs a new PlaySkipCommandHandler.
      *
      * @param tableService The service used to play cards.
-     * @param turnManagerService The service used to end turns.
+     * @param turnManagerService The service used to manipulate and end turns.
      */
-    public PlayCommandHandler( TableService tableService, TurnManagerService turnManagerService ){
+    public PlaySkipCommandHandler( TableService tableService, TurnManagerService turnManagerService ){
         this.tableService = tableService;
         this.turnManagerService = turnManagerService;
     }
 
     /**
-     * Plays the card described by the command parameters and ends the current player's turn.
+     * Plays the skip card described by the command parameters, ends the current
+     * player's turn, and immediately skips the next player by ending their turn as well.
      *
      * @param command The command containing the card symbol and color.
      * @throws JogadaInvalidaException if the current player cannot play the specified card.
@@ -35,15 +36,16 @@ public class PlayCommandHandler implements CommandHandler {
     public void handle( Command command ) throws JogadaInvalidaException {
         String[] parameters = command.getParameters();
         if( parameters.length != 2 || parameters[0].isBlank() || parameters[1].isBlank() )
-            throw new IllegalArgumentException("Uso do comando: PLAY;símbolo;cor. ");
+            throw new IllegalArgumentException("Uso do comando: PLAY_SKIP;símbolo;cor. ");
 
         tableService.play(parameters[0], parameters[1]);
+        turnManagerService.endTurn();
         turnManagerService.endTurn();
     }
 
     @Override
     public String handleWithOutput( Command command ) throws JogadaInvalidaException {
         handle(command);
-        return "Carta jogada. Turno finalizado. ";
+        return "Carta jogada. Próximo jogador pulado! ";
     }
 }

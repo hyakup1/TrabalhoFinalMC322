@@ -7,7 +7,7 @@ package com.uno.model.valueobject;
 public enum Symbol {
     ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, ZERO,
     SKIP, 
-    FLIP, 
+    REVERSE, 
     PLUS_TWO, 
     PLUS_FOUR, 
     CHANGE_COLOR
